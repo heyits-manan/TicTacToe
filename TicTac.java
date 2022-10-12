@@ -9,6 +9,8 @@ public class TicTac {
     static ArrayList<Integer> playerPosition = new ArrayList<Integer>();
     static ArrayList<Integer> cpuPosition = new ArrayList<Integer>();
 
+
+    //main function starts!
     public static void main(String[] args) {
         char[][] gameBoard = {
                 { ' ', '|', ' ', '|', ' ' },
@@ -24,24 +26,32 @@ public class TicTac {
 
             Scanner sc = new Scanner(System.in);
 
+            //position the player chooses!
             System.out.println("Entert the position (1 - 9): ");
             int position = sc.nextInt();
-            String result = checkWinner();
+
+            //checking the winner!
+            String result = checkWinner(); 
             if (result.length() > 0) {
                 System.out.println(result);
                 break;
             }
+
+            //making sure the player position does not take the place of cpu position and vice versa!
             while (playerPosition.contains(position) || cpuPosition.contains(playerPosition)
                     || cpuPosition.contains(position)) {
                 System.out.println("Position taken! Please select a new position.");
                 position = sc.nextInt();
             }
 
+            //Function to put the user input inside individual boxes!
             placePiece(position, gameBoard, "player");
 
-            Random ran = new Random();
+            
+            Random ran = new Random();  //Random input by CPU!
             int cpuPos = ran.nextInt(9) + 1;
-            while (playerPosition.contains(cpuPos) || cpuPosition.contains(cpuPos)) {
+
+            while (playerPosition.contains(cpuPos) || cpuPosition.contains(cpuPos)) {    //making sure the player position does not take the place of cpu position and vice versa!
                 cpuPos = ran.nextInt(9) + 1;
             }
 
