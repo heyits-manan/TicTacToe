@@ -9,9 +9,7 @@ public class TicTac {
     static ArrayList<Integer> playerPosition = new ArrayList<Integer>();
     static ArrayList<Integer> cpuPosition = new ArrayList<Integer>();
 
-
-    
-    public static void main(String[] args) {  //main function starts!
+    public static void main(String[] args) { // main function starts!
         char[][] gameBoard = {
                 { ' ', '|', ' ', '|', ' ' },
                 { '-', '+', '-', '+', '-' },
@@ -20,55 +18,62 @@ public class TicTac {
                 { ' ', '|', ' ', '|', ' ' },
         };
 
-        printGameBoard(gameBoard); //Displays the GameBoard!
+        printGameBoard(gameBoard); // Displays the GameBoard!
 
         while (true) {
 
             Scanner sc = new Scanner(System.in);
 
-            
-            System.out.println("Entert the position (1 - 9): "); //position the player chooses!
+            System.out.println("Entert the position (1 - 9): "); // position the player chooses!
             int position = sc.nextInt();
-
-            
-            String result = checkWinner(); //checking the winner! 
-            if (result.length() > 0) {
-                System.out.println(result);
-                break;
-            }
-
-            
-            while (playerPosition.contains(position) || cpuPosition.contains(playerPosition) //making sure the player position does not take the place of cpu position and vice versa! 
-                    || cpuPosition.contains(position)) {
-                System.out.println("Position taken! Please select a new position.");
+            if (position > 9) {
+                System.out.println("Enter number from 1 to 9:\n");
                 position = sc.nextInt();
+            } else {
+                String result = checkWinner(); // checking the winner!
+                if (result.length() > 0) {
+                    System.out.println(result);
+                    break;
+                }
+
+                while (playerPosition.contains(position) || cpuPosition.contains(playerPosition) // making sure the
+                                                                                                 // player position does
+                                                                                                 // not take the place
+                                                                                                 // of cpu position and
+                                                                                                 // vice versa!
+                        || cpuPosition.contains(position)) {
+                    System.out.println("Position taken! Please select a new position.");
+                    position = sc.nextInt();
+                }
+
+                placePiece(position, gameBoard, "player"); // Function to place the user input inside the Game Board!
+
+                Random ran = new Random(); // Random input by CPU!
+                int cpuPos = ran.nextInt(9) + 1;
+
+                while (playerPosition.contains(cpuPos) || cpuPosition.contains(cpuPos)) { // making sure the player
+                                                                                          // position does not take the
+                                                                                          // place of cpu position and
+                                                                                          // vice versa!
+                    cpuPos = ran.nextInt(9) + 1;
+                }
+
+                placePiece(cpuPos, gameBoard, "cpu"); // Function to place the user input inside the Game Board!
+
+                printGameBoard(gameBoard); // Displays the GameBoard!
+
+                result = checkWinner(); // checking the winner!
+                if (result.length() > 0) {
+                    System.out.println(result);
+                    break;
+                }
+
             }
-
-            placePiece(position, gameBoard, "player"); //Function to place  the user input inside the Game Board!
-            
-            Random ran = new Random();  //Random input by CPU!
-            int cpuPos = ran.nextInt(9) + 1;
-
-            while (playerPosition.contains(cpuPos) || cpuPosition.contains(cpuPos)) {    //making sure the player position does not take the place of cpu position and vice versa!
-                cpuPos = ran.nextInt(9) + 1;
-            }
-
-            placePiece(cpuPos, gameBoard, "cpu"); //Function to place the user input inside the Game Board!
-
-            printGameBoard(gameBoard); //Displays the GameBoard!
-            
-            result = checkWinner(); //checking the winner! 
-            if (result.length() > 0) {
-                System.out.println(result);
-                break;
-            }
-
         }
 
     };
 
-
-    public static void printGameBoard(char[][] gameBoard) {  //Function that displays the GameBoard!
+    public static void printGameBoard(char[][] gameBoard) { // Function that displays the GameBoard!
         for (char[] row : gameBoard) {
             for (char c : row) {
                 System.out.print(c);
@@ -77,8 +82,8 @@ public class TicTac {
         }
     }
 
-
-    public static void placePiece(int position, char[][] gameBoard, String user) { //Function to place the user input inside the Game Board!
+    public static void placePiece(int position, char[][] gameBoard, String user) { // Function to place the user input
+                                                                                   // inside the Game Board!
 
         char symbol = 'X';
         if (user.equals("player")) {
@@ -124,7 +129,7 @@ public class TicTac {
 
     }
 
-    public static String checkWinner() {        //Function to check the winner!
+    public static String checkWinner() { // Function to check the winner!
         List topRow = Arrays.asList(1, 2, 3);
         List midRow = Arrays.asList(4, 5, 6);
         List bottomRow = Arrays.asList(7, 8, 9);
